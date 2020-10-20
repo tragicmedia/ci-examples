@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dev
+  name: dev
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tragicdev
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: tragicdev
+    spec:
+      containers:
+        - image: gcr.io/tragic-media/github.com/tragicmedia/ci-examples
+          imagePullPolicy: Always
+          name: dev
